@@ -56,6 +56,12 @@ MonoBehaviour:
   vStartPosLimit: 5
   rb: {fileID: 0}
   gAura: {fileID: 1687876921807802460}
+  gGameManager: {fileID: 0}
+  MBSGameManager: {fileID: 0}
+  vOOB: -15
+  vValue: 2
+  gLightningSource: {fileID: 3522035849878955357, guid: e64ea9b38eb207241b7876b739456471, type: 3}
+  gLightning: {fileID: 0}
 --- !u!54 &7249880168648557006
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))] 
+[RequireComponent(typeof(Rigidbody))]
 
 
 
@@ -10,16 +10,18 @@ public class MBSTarget : MonoBehaviour
 
     [SerializeField] float vDistancefromBack;
     [SerializeField] float vDistanceBelow;
-    [SerializeField] Vector2 vRandomForceLimits,vRandomTorqueLimits,vRandomForceLimitsSide;
+    [SerializeField] Vector2 vRandomForceLimits, vRandomTorqueLimits, vRandomForceLimitsSide;
     [SerializeField] float vStartPosLimit;
     [SerializeField] Rigidbody rb;
     [SerializeField] GameObject gAura;
     [SerializeField] GameObject gGameManager;
     [SerializeField] MBSGameManager MBSGameManager;
     [SerializeField] float vOOB = -15f;
+    [SerializeField] int vValue;
+    [SerializeField] GameObject gLightningSource;
+    [SerializeField] GameObject gLightning;
 
-    
-    
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -90,6 +92,9 @@ public class MBSTarget : MonoBehaviour
     {
         Destroy(gameObject);
         MBSGameManager.vCurrentMouseOver = null;
+        MBSGameManager.FnUpdateScore(vValue);
+        gLightning = Instantiate(gLightningSource, transform.position, Quaternion.identity);
+        Destroy(gLightning, 0.5f);
 
     }
 

@@ -13,8 +13,10 @@ public class MBSGameManager : MonoBehaviour
     public int vGameState;
     public GameObject vCurrentMouseOver;
     [SerializeField] TextMeshProUGUI tIDObject;
-    [SerializeField] MBSInventory MBSInventory;
+   // [SerializeField] MBSInventory MBSInventory;
     [SerializeField] TextMeshProUGUI[] tSlot;
+    public int vScore;
+    [SerializeField] TMP_Text tScore;
     [SerializeField] MeshRenderer mBackground;
     [SerializeField] int[,] vSceneMap = new int[9, 9];
     [SerializeField] string[] vSceneName = new string[9];
@@ -28,14 +30,17 @@ public class MBSGameManager : MonoBehaviour
     public int vNextScene0;
     public int vNextScene1;
     public int vNextScene2;
-    [SerializeField] Material[] vSceneBackground; 
+    [SerializeField] Material[] vSceneBackground;
+
+    public GameObject gCarried;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
 
         //spawning flying objects
-        StartCoroutine(CRSpawnFlying());
+       
 
         FnSceneSetup();
         FNSceneChange();
@@ -45,6 +50,9 @@ public class MBSGameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
+        
+        
         //Display Object Name
         if (vCurrentMouseOver != null)
         {
@@ -56,7 +64,7 @@ public class MBSGameManager : MonoBehaviour
             tIDObject.text = string.Empty;
         }
 
-        for (int i = 0; i < tSlot.Length; i++)
+     /*   for (int i = 0; i < tSlot.Length; i++)
         {
             if (MBSInventory.vCarried[i] != null)
             {
@@ -70,6 +78,8 @@ public class MBSGameManager : MonoBehaviour
             }
 
         }
+
+        */
     }
 
 
@@ -78,9 +88,9 @@ public class MBSGameManager : MonoBehaviour
 
     {
 
-        while (vGameState == 1)
+        while (vScene ==4)
         {
-
+            //Random object scene
             // create random object
 
             int vObjIndTmp = Random.Range(0, vTargets.Count);
@@ -118,12 +128,17 @@ public class MBSGameManager : MonoBehaviour
         vSceneMap[2, 1] = 3;
         vSceneMap[2, 2] = 0;
         vSceneMap[3, 0] = 99;
-        vSceneMap[3, 1] = 0;
-        vSceneMap[3, 2] = 2;
+        vSceneMap[3, 1] = 2;
+        vSceneMap[3, 2] = 4;
+        vSceneMap[4, 0] = 99;
+        vSceneMap[4, 1] = 3;
+        vSceneMap[4, 2] = 99;
         vSceneName[0] = "Garden";
         vSceneName[1] = "Inside";
         vSceneName[2] = "Forest";
         vSceneName[3] = "Graveyard";
+        vSceneName[4] = "River";
+        
      
 
 
@@ -198,15 +213,35 @@ public class MBSGameManager : MonoBehaviour
         vNextScene0 = vSceneMap[vScene, 0];
         vNextScene1 = vSceneMap[vScene, 1];
         vNextScene2 = vSceneMap[vScene, 2];
-       
+
+        //Special Scene activities
+
+
+        if (vScene ==4)
+            {
+            StartCoroutine(CRSpawnFlying());
+        }
+
+
     }
 
 
 
+    public void FnUpdateScore(int vUpdateTmp)
+    {
+
+        vScore = vScore + vUpdateTmp;
+        tScore.text = "Score: " + vScore;
+
+    }
 
 
+    public void FnPause()
 
-    
+    {
+
+
+    }
 
 
 
