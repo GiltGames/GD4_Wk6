@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class MBSGameManager : MonoBehaviour
 {
 
+    public int vDifficulty;
+
     public List<GameObject> vTargets;
     [SerializeField] Vector2 vSpawnTimeLimits;
     public int vGameState;
@@ -31,8 +33,23 @@ public class MBSGameManager : MonoBehaviour
     public int vNextScene1;
     public int vNextScene2;
     [SerializeField] Material[] vSceneBackground;
+    [SerializeField] AudioClip[] aSceneMusic;
+    [SerializeField] AudioSource aSource;
 
     public GameObject gCarried;
+    [SerializeField] GameObject[] gTargetsD;
+
+    [SerializeField] float vTimer;
+    [SerializeField] float vLength;
+    [SerializeField] MBSUIAudio MBSUIAudio;
+
+    [Header("Herbs")]
+    public List<GameObject> gHerbs;
+    [SerializeField] Vector2 vHerbSpawnInt;
+
+
+    [Header("UI")]
+    public GameObject gGameplayScreen, gGameOverScreen, gPauseScreen, gInitialScreen;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -40,18 +57,36 @@ public class MBSGameManager : MonoBehaviour
     {
 
         //spawning flying objects
-       
 
-        FnSceneSetup();
-        FNSceneChange();
-
+        if (vGameState == 1)
+        {
+            FnSceneSetup();
+            FNSceneChange();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
        
-        
+        if (vGameState ==1)
+
+        {
+            vTimer = vTimer+ Time.deltaTime;
+
+
+        }
+
+        if (vTimer > vLength)
+        {
+
+            vGameState = 3;
+            MBSUIAudio.FnGameOver();
+
+
+
+        }
+
         
         //Display Object Name
         if (vCurrentMouseOver != null)
@@ -88,7 +123,7 @@ public class MBSGameManager : MonoBehaviour
 
     {
 
-        while (vScene ==4)
+        while (vScene ==4 && vGameState ==1)
         {
             //Random object scene
             // create random object
@@ -112,6 +147,43 @@ public class MBSGameManager : MonoBehaviour
 
 
     }
+
+    IEnumerator FnSpawnHerb()
+
+
+    {
+
+        while (vScene != 4 && vGameState == 1)
+        {
+            //Random object scene
+            // create random object
+
+            int vObjIndTmp = Random.Range(0, gHerbs.Count);
+
+            Instantiate(gHerbs[vObjIndTmp]);
+
+
+
+
+
+
+
+            // wait
+
+            float vWaitTmp = Random.Range(vHerbSpawnInt.x, vHerbSpawnInt.y);
+            yield return new WaitForSeconds(vWaitTmp);
+
+
+
+        }
+
+
+
+        yield return null;
+
+
+    }
+
 
     void FnSceneSetup()
 
@@ -175,6 +247,8 @@ public class MBSGameManager : MonoBehaviour
     {
 
         mBackground.material = vSceneBackground[vScene];
+        aSource.clip = aSceneMusic[vScene];
+        aSource.Play(); 
 
 
         if (vSceneMap[vScene, 0] == 99)
@@ -217,11 +291,40 @@ public class MBSGameManager : MonoBehaviour
         //Special Scene activities
 
 
+   MBSTarget[] gTargets = FindObjectsByType<MBSTarget>(FindObjectsSortMode.None);
+
+
+   foreach (MBSTarget target in gTargets) 
+            {
+            Destroy(target.gameObject);
+
+        }
+
+        MBSHerbs[] gHerbs = FindObjectsByType<MBSHerbs>(FindObjectsSortMode.None);
+
+
+        foreach (MBSHerbs herb in gHerbs)
+        {
+            Destroy(herb.gameObject);
+
+        }
+
+
+        //river scence
+
         if (vScene ==4)
             {
             StartCoroutine(CRSpawnFlying());
         }
+        
 
+        //all but river and inside
+
+        if(vScene !=4 && vScene!=1)
+
+        {
+            StartCoroutine(FnSpawnHerb());
+        }
 
     }
 
@@ -239,9 +342,23 @@ public class MBSGameManager : MonoBehaviour
     public void FnPause()
 
     {
+        vGameState = 3;
+
 
 
     }
+
+    public void FnUnPause()
+    {
+
+
+        vGameState = 1;
+
+
+    }
+
+
+    
 
 
 

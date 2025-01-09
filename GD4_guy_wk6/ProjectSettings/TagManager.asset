@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Good
   - Bad
+  - Valid
   layers:
   - Default
   - TransparentFX
