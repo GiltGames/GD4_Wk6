@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 [RequireComponent(typeof(Rigidbody))]
 
@@ -20,6 +21,8 @@ public class MBSTarget : MonoBehaviour
     [SerializeField] int vValue;
     [SerializeField] GameObject gLightningSource;
     [SerializeField] GameObject gLightning;
+    [SerializeField] GameObject gBatwingSource;
+    [SerializeField] GameObject gBatwing;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -95,6 +98,9 @@ public class MBSTarget : MonoBehaviour
         MBSGameManager.FnUpdateScore(vValue);
         gLightning = Instantiate(gLightningSource, transform.position, Quaternion.identity);
         Destroy(gLightning, 0.5f);
+
+        gBatwing=Instantiate(gBatwingSource, transform.position, Quaternion.identity);
+
 
     }
 

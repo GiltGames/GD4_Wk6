@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 
 using UnityEngine.UI;
+using System.Globalization;
 
 public class MBSGameManager : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class MBSGameManager : MonoBehaviour
    // [SerializeField] MBSInventory MBSInventory;
     [SerializeField] TextMeshProUGUI[] tSlot;
     public int vScore;
+    [SerializeField] int vLivesMax;
+    public int vLives;
     [SerializeField] TMP_Text tScore;
     [SerializeField] MeshRenderer mBackground;
     [SerializeField] int[,] vSceneMap = new int[9, 9];
@@ -35,6 +38,11 @@ public class MBSGameManager : MonoBehaviour
     [SerializeField] Material[] vSceneBackground;
     [SerializeField] AudioClip[] aSceneMusic;
     [SerializeField] AudioSource aSource;
+    [SerializeField] List<GameObject> gValidSpawnArea;
+    [SerializeField] int[,] vHerbinScene = new int[10,10];
+    [SerializeField] int[] vNoofHerbsinScene = new int[10];
+    
+
 
     public GameObject gCarried;
     [SerializeField] GameObject[] gTargetsD;
@@ -49,18 +57,21 @@ public class MBSGameManager : MonoBehaviour
 
 
     [Header("UI")]
-    public GameObject gGameplayScreen, gGameOverScreen, gPauseScreen, gInitialScreen;
+    public GameObject gGameplayScreen, gGameOverScreen, gPauseScreen, gRestartScreen, gInitialScreen, gOptionScreen, gInitialOptions;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
 
+        vLives = vLivesMax;
+
         //spawning flying objects
 
         if (vGameState == 1)
         {
             FnSceneSetup();
+            gValidSpawnArea[vScene].SetActive(true);
             FNSceneChange();
         }
     }
@@ -158,12 +169,17 @@ public class MBSGameManager : MonoBehaviour
             //Random object scene
             // create random object
 
-            int vObjIndTmp = Random.Range(0, gHerbs.Count);
+            int vObjIndTmp = Random.Range(0, vNoofHerbsinScene[vScene]);
 
-            Instantiate(gHerbs[vObjIndTmp]);
+            int vHerbTmp = vHerbinScene[vScene, vObjIndTmp];
+
+            if (vHerbTmp < 99)
+            {
+
+                Instantiate(gHerbs[vHerbTmp]);
 
 
-
+            }
 
 
 
@@ -188,7 +204,7 @@ public class MBSGameManager : MonoBehaviour
     void FnSceneSetup()
 
     {
-
+        // sets up all of the scenes
 
         vSceneMap[0, 0] = 1;
         vSceneMap[0, 1] = 2;
@@ -210,34 +226,64 @@ public class MBSGameManager : MonoBehaviour
         vSceneName[2] = "Forest";
         vSceneName[3] = "Graveyard";
         vSceneName[4] = "River";
+
+        for (int i = 0; i < 10; i++)
+        {
+            vNoofHerbsinScene[i] = 99;
+            
+            for (int j = 0; j < 10; j++)
+            {
+                vHerbinScene[i,j] = 99;
+
+            }
+
+        }
+
+        vNoofHerbsinScene[0] = 1;
+        vNoofHerbsinScene[1] = 0;
+        vNoofHerbsinScene[2] = 2;
+        vNoofHerbsinScene[3] = 1;
+
+
+        vHerbinScene[0, 0] = 0;
+            vHerbinScene[0, 1] = 1;
+            vHerbinScene[0, 2] = 2;
+
+
+
+            vHerbinScene[2, 1] = 2;
+        vHerbinScene[2, 0] = 1  ;
+        vHerbinScene[3, 0] = 3; 
+            vHerbinScene[1, 0] = 99;
+
         
-     
-
-
     }
 
     public void FnSceneButton0()
     {
+        gValidSpawnArea[vScene].SetActive(false);
         vScene = vNextScene0;
         FNSceneChange();
-
+        gValidSpawnArea[vScene].SetActive(true);
 
     }
 
 
     public void FnSceneButton1()
     {
+        gValidSpawnArea[vScene].SetActive(false);
         vScene = vNextScene1;
         FNSceneChange();
-
+        gValidSpawnArea[vScene].SetActive(true);
 
     }
 
     public void FnSceneButton2()
     {
+        gValidSpawnArea[vScene].SetActive(false);
         vScene = vNextScene2;
         FNSceneChange();
-
+        gValidSpawnArea[vScene].SetActive(true);
 
     }
 
@@ -288,8 +334,8 @@ public class MBSGameManager : MonoBehaviour
         vNextScene1 = vSceneMap[vScene, 1];
         vNextScene2 = vSceneMap[vScene, 2];
 
-        //Special Scene activities
-
+        
+        //destoy objects on change of scene
 
    MBSTarget[] gTargets = FindObjectsByType<MBSTarget>(FindObjectsSortMode.None);
 
@@ -309,7 +355,7 @@ public class MBSGameManager : MonoBehaviour
 
         }
 
-
+        //Special Scene activities
         //river scence
 
         if (vScene ==4)
@@ -342,8 +388,13 @@ public class MBSGameManager : MonoBehaviour
     public void FnPause()
 
     {
-        vGameState = 3;
-
+        vGameState = 2;
+        Time.timeScale = 0;
+        gGameplayScreen.SetActive(false);
+        gPauseScreen.SetActive(true);
+        gRestartScreen.SetActive(true);
+        gOptionScreen.SetActive(true);
+        gInitialOptions.SetActive(false);
 
 
     }
@@ -353,12 +404,17 @@ public class MBSGameManager : MonoBehaviour
 
 
         vGameState = 1;
-
+        Time.timeScale = 1;
+        gPauseScreen.SetActive(false);
+        gRestartScreen.SetActive(false);
+        gGameplayScreen.SetActive(true);
+        gOptionScreen.SetActive(false);
+        gInitialOptions.SetActive(true);
 
     }
 
 
-    
+
 
 
 

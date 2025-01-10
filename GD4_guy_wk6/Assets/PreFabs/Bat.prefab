@@ -150,6 +150,8 @@ MonoBehaviour:
   vValue: 2
   gLightningSource: {fileID: 3522035849878955357, guid: e64ea9b38eb207241b7876b739456471, type: 3}
   gLightning: {fileID: 0}
+  gBatwingSource: {fileID: 8461558711463750396, guid: 970580b85aa30534fb17a7a62ecfb6dc, type: 3}
+  gBatwing: {fileID: 0}
 --- !u!54 &1153414853746415891
 Rigidbody:
   m_ObjectHideFlags: 0

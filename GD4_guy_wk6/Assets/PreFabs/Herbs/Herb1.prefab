@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6398079220783553593}
   - component: {fileID: 7898855152467731343}
   m_Layer: 0
-  m_Name: Herbs1a
+  m_Name: Herb1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.305262, y: -1.81, z: -2.407}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4669661f36cf57842b1dc155e3420e26, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f6c4d9e5b3582c944a40c83f1bd9cc5f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.22745098}
   m_FlipX: 0
   m_FlipY: 0
@@ -132,9 +132,9 @@ MonoBehaviour:
   vDropLimitX: 0
   gGameManager: {fileID: 0}
   MBSGameManager: {fileID: 0}
-  vHerbNo: 0
-  vHerbName: Jarl's Narrowleaf
-  vImage: {fileID: 2800000, guid: 4669661f36cf57842b1dc155e3420e26, type: 3}
+  vHerbNo: 1
+  vHerbName: Maid's Rose
+  vImage: {fileID: 2800000, guid: f6c4d9e5b3582c944a40c83f1bd9cc5f, type: 3}
   vDistancefromBack: -1
   vDistanceBelow: 5
   vStartPosLimit: 4.4
@@ -145,3 +145,7 @@ MonoBehaviour:
   fMouseClickOn: 0
   fInInventory: 0
   vInstantDistIn: -1
+  gIDObj: {fileID: 0}
+  tIDObj: {fileID: 0}
+  vCurMousePos: {x: 0, y: 0, z: 0}
+  fMouseOver: 0

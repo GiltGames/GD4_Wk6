@@ -37,6 +37,7 @@ public class MBSHerbs : MonoBehaviour
     [SerializeField] GameObject gIDObj;
     [SerializeField] TextMeshProUGUI tIDObj;
     [SerializeField] Vector3 vCurMousePos;
+    [SerializeField] bool fMouseOver;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -88,7 +89,7 @@ public class MBSHerbs : MonoBehaviour
         
         //reset mouse button
 
-        if (fMouseClickOn)
+       /* if (fMouseClickOn)
         {
 
             Vector3 vCurMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -96,12 +97,31 @@ public class MBSHerbs : MonoBehaviour
             transform.position = vScreenPosStart + vCurMousePos - vMousePosStart;
 
         }
-
+       */
 
         if (Input.GetMouseButtonUp(0))
         {
 
             fMouseClickOn = false;
+            fMouseOver = false;
+        }
+
+
+
+        if (fMouseOver)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                vCurMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                vCurMousePos = new Vector3(vCurMousePos.x, vCurMousePos.y, vInstantDistIn);
+
+                Debug.Log("Mouse is now at " + vCurMousePos + "when it started at" + vMousePosStart);
+                Vector3 vNewPosTmp = vScreenPosStart + vCurMousePos - vMousePosStart;
+
+                transform.position = new Vector3(vNewPosTmp.x, vNewPosTmp.y, vInstantDistIn);
+
+            }
+
         }
 
 
@@ -111,6 +131,7 @@ public class MBSHerbs : MonoBehaviour
     {
         
         rSpriteRenderer.color = vStrongColour;
+        fMouseOver = true;
 
 
     }
@@ -119,7 +140,8 @@ public class MBSHerbs : MonoBehaviour
     private void OnMouseExit()
     {
 
-        rSpriteRenderer.color = vFadeColour;
+       // rSpriteRenderer.color = vFadeColour;
+       // fMouseOver = false;
 
     }
 
@@ -128,8 +150,9 @@ public class MBSHerbs : MonoBehaviour
         vScreenPosStart = transform.position;
        vMousePosStart = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         vOffset = vScreenPosStart - vMousePosStart;
-
+        fMouseOver = true;
         MBSGameManager.gCarried = gameObject;
+
 
 
 
@@ -149,24 +172,7 @@ public class MBSHerbs : MonoBehaviour
     }
 
     */
-    private void OnMouseOver()
-    {
-        //tIDObj.text = gameObject.name;
-        
-        
-        if (Input.GetMouseButton(0) )
-        { 
-       vCurMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            vCurMousePos = new Vector3(vCurMousePos.x,vCurMousePos.y,vInstantDistIn);
-
-            Debug.Log("Mouse is now at " + vCurMousePos +"when it started at" + vMousePosStart);
-            Vector3 vNewPosTmp = vScreenPosStart + vCurMousePos - vMousePosStart;
-
-            transform.position = new Vector3(vNewPosTmp.x, vNewPosTmp.y, vInstantDistIn);
-           
-    }
-
-    }
+ 
 
     
 
@@ -209,6 +215,7 @@ public class MBSHerbs : MonoBehaviour
         vMousePosStart = vPosTmp;
         vScreenPosStart = vPosTmp;
         rSpriteRenderer.color = vStrongColour;
+        fMouseOver = true;
 
      //   gIDObj = GameObject.FindWithTag("IDDisp");
       //  tIDObj = gIDObj.GetComponent<TextMeshProUGUI>();

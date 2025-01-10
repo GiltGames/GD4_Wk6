@@ -7,6 +7,8 @@ TagManager:
   - Good
   - Bad
   - Valid
+  - IDDIsp
+  - Cauldron
   layers:
   - Default
   - TransparentFX
