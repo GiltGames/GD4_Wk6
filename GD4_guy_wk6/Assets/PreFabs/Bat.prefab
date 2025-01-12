@@ -152,6 +152,9 @@ MonoBehaviour:
   gLightning: {fileID: 0}
   gBatwingSource: {fileID: 8461558711463750396, guid: 970580b85aa30534fb17a7a62ecfb6dc, type: 3}
   gBatwing: {fileID: 0}
+  aLightning: {fileID: 8300000, guid: 351b404f8d0f26c499bdbae44ed4f802, type: 3}
+  MBSFXMarker: {fileID: 0}
+  aSFX: {fileID: 0}
 --- !u!54 &1153414853746415891
 Rigidbody:
   m_ObjectHideFlags: 0

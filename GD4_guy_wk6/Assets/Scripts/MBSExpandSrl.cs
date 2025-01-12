@@ -55,8 +55,9 @@ public class MBSExpandSrl : MonoBehaviour
 
     private void OnMouseExit()
     {
-        gScroll.SetActive(false);
+        
         tScroll.text = string.Empty;
+        gScroll.SetActive(false);
     }
 
 }

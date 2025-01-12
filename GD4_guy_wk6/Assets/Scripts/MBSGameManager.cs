@@ -41,6 +41,7 @@ public class MBSGameManager : MonoBehaviour
     [SerializeField] List<GameObject> gValidSpawnArea;
     [SerializeField] int[,] vHerbinScene = new int[10,10];
     [SerializeField] int[] vNoofHerbsinScene = new int[10];
+    [SerializeField] int[] vStartingHerbs = new int[10];
     
 
 
@@ -65,15 +66,11 @@ public class MBSGameManager : MonoBehaviour
     {
 
         vLives = vLivesMax;
-
+        FnSceneSetup();
+        gValidSpawnArea[vScene].SetActive(true);
         //spawning flying objects
 
-        if (vGameState == 1)
-        {
-            FnSceneSetup();
-            gValidSpawnArea[vScene].SetActive(true);
-            FNSceneChange();
-        }
+     
     }
 
     // Update is called once per frame
@@ -159,41 +156,81 @@ public class MBSGameManager : MonoBehaviour
 
     }
 
-    IEnumerator FnSpawnHerb()
 
-
+    void FnSpawnHerbInitial()
     {
 
-        while (vScene != 4 && vGameState == 1)
+
+        if (vScene != 4 && vGameState == 1 && vStartingHerbs[vScore] > 0)
         {
-            //Random object scene
-            // create random object
 
-            int vObjIndTmp = Random.Range(0, vNoofHerbsinScene[vScene]);
-
-            int vHerbTmp = vHerbinScene[vScene, vObjIndTmp];
-
-            if (vHerbTmp < 99)
+            for (int i = 0; i < vStartingHerbs[vScene]; i++)
             {
 
-                Instantiate(gHerbs[vHerbTmp]);
+                int vObjIndTmp = Random.Range(0, vNoofHerbsinScene[vScene]);
+
+                int vHerbTmp = vHerbinScene[vScene, vObjIndTmp];
+
+                if (vHerbTmp < 99)
+                {
+
+                    Instantiate(gHerbs[vHerbTmp]);
+
+
+                }
 
 
             }
 
 
 
-
-            // wait
-
-            float vWaitTmp = Random.Range(vHerbSpawnInt.x, vHerbSpawnInt.y);
-            yield return new WaitForSeconds(vWaitTmp);
-
-
-
         }
 
 
+    }
+
+    IEnumerator FnSpawnHerb()
+
+
+    {
+
+
+
+
+
+        while (vScene != 4 && vGameState == 1)
+        {
+            //Random object scene
+            // create random object
+            // check not 99, for null herbs
+            if (vNoofHerbsinScene[vScene] < 10)
+            {
+
+                int vObjIndTmp = Random.Range(0, vNoofHerbsinScene[vScene]);
+
+                int vHerbTmp = vHerbinScene[vScene, vObjIndTmp];
+
+                if (vHerbTmp < 99)
+                {
+
+                    Instantiate(gHerbs[vHerbTmp]);
+
+
+                }
+
+
+
+
+                // wait
+
+                float vWaitTmp = Random.Range(vHerbSpawnInt.x, vHerbSpawnInt.y);
+                yield return new WaitForSeconds(vWaitTmp);
+
+
+
+            }
+
+        }
 
         yield return null;
 
@@ -201,7 +238,7 @@ public class MBSGameManager : MonoBehaviour
     }
 
 
-    void FnSceneSetup()
+    public void FnSceneSetup()
 
     {
         // sets up all of the scenes
@@ -221,39 +258,27 @@ public class MBSGameManager : MonoBehaviour
         vSceneMap[4, 0] = 99;
         vSceneMap[4, 1] = 3;
         vSceneMap[4, 2] = 99;
-        vSceneName[0] = "Garden";
-        vSceneName[1] = "Inside";
-        vSceneName[2] = "Forest";
-        vSceneName[3] = "Graveyard";
-        vSceneName[4] = "River";
+        
+        // 99 is code for null
+     
 
-        for (int i = 0; i < 10; i++)
-        {
-            vNoofHerbsinScene[i] = 99;
-            
-            for (int j = 0; j < 10; j++)
-            {
-                vHerbinScene[i,j] = 99;
-
-            }
-
-        }
-
-        vNoofHerbsinScene[0] = 1;
-        vNoofHerbsinScene[1] = 0;
-        vNoofHerbsinScene[2] = 2;
-        vNoofHerbsinScene[3] = 1;
-
-
+      
+    
+        // herbs in scne 0
         vHerbinScene[0, 0] = 0;
             vHerbinScene[0, 1] = 1;
             vHerbinScene[0, 2] = 2;
 
 
-
+        //herbs in scene 2
             vHerbinScene[2, 1] = 2;
         vHerbinScene[2, 0] = 1  ;
-        vHerbinScene[3, 0] = 3; 
+        //herbs in scene3
+        
+        vHerbinScene[3, 0] = 3;
+        vHerbinScene[3, 1] = 4;
+
+        //null herb in scene 1 (Cauldron)
             vHerbinScene[1, 0] = 99;
 
         
@@ -369,6 +394,7 @@ public class MBSGameManager : MonoBehaviour
         if(vScene !=4 && vScene!=1)
 
         {
+            FnSpawnHerbInitial();
             StartCoroutine(FnSpawnHerb());
         }
 

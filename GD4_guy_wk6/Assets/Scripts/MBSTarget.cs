@@ -23,6 +23,9 @@ public class MBSTarget : MonoBehaviour
     [SerializeField] GameObject gLightning;
     [SerializeField] GameObject gBatwingSource;
     [SerializeField] GameObject gBatwing;
+    [SerializeField] AudioClip aLightning;
+    [SerializeField] MBSFXMarker MBSFXMarker;
+    [SerializeField] AudioSource aSFX;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -37,6 +40,10 @@ public class MBSTarget : MonoBehaviour
 
         gGameManager = FindFirstObjectByType<MBSGameManager>().gameObject;
         MBSGameManager = gGameManager.GetComponent<MBSGameManager>();
+
+        MBSFXMarker = FindFirstObjectByType<MBSFXMarker>().GetComponent<MBSFXMarker>();
+        aSFX = MBSFXMarker.GetComponent<AudioSource>();
+        aSFX.clip = aLightning;
 
     }
 
@@ -98,6 +105,7 @@ public class MBSTarget : MonoBehaviour
         MBSGameManager.FnUpdateScore(vValue);
         gLightning = Instantiate(gLightningSource, transform.position, Quaternion.identity);
         Destroy(gLightning, 0.5f);
+        aSFX.Play();
 
         gBatwing=Instantiate(gBatwingSource, transform.position, Quaternion.identity);
 

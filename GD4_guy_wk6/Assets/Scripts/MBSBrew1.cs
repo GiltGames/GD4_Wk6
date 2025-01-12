@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using System.Collections;
 using TMPro;
-using UnityEditor.ShaderGraph.Internal;
+
 using UnityEngine;
 
 
@@ -30,8 +30,12 @@ public class MBSBrew1 : MonoBehaviour
     [SerializeField] TMP_Text tPotionDisplay;
     [SerializeField] float vPotionDisplayTime=3;
     [SerializeField] MBSUIAudio MBSUIAudio;
-    
+    [SerializeField] AudioClip aBubble;
+    [SerializeField] AudioClip aLaugh;
+    [SerializeField] AudioClip aExplode;
    
+
+
 
     [SerializeField] TextMeshProUGUI tLives;
 
@@ -58,18 +62,7 @@ public class MBSBrew1 : MonoBehaviour
     void FnPotionSetUp()
     {
 
-        vPotion[0] = "Healing Potion";
-        vPotion[1] = "Strength Potion";
-        vPotion[2] = "Invigoration Potion";
-        vPotion[3] = "Shrinking Potion";
-        vPotion[4] = "Pain Resistance Potion";
-
-        vPotionScore[0] = 1;
-        vPotionScore[1] = 1;
-        vPotionScore[2] = 2;
-        vPotionScore[3] = 2;
-        vPotionScore[4] = 3;
-
+     
 
         for (int i = 0; i < vPotion.Length; i++)
         {
@@ -165,10 +158,12 @@ public class MBSBrew1 : MonoBehaviour
             if (fAnyPotionMade)
             {
                 vBubbleColour = Color.blue;
+                MBSUIAudio.FnPlaySFX(aLaugh);
             }
             else
             {
                 vBubbleColour = Color.red;
+                MBSUIAudio.FnPlaySFX(aExplode);
                 MBSGameManager.vLives -= 1;
 
                 StartCoroutine(FnPotionDisplay("Your attempt exploded"));
@@ -191,6 +186,7 @@ public class MBSBrew1 : MonoBehaviour
         else
         {
             vBubbleColour = Color.green;
+            MBSUIAudio.FnPlaySFX(aBubble);
         }
 
 

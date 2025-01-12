@@ -5,10 +5,12 @@ public class MBSSetDiff : MonoBehaviour
     [SerializeField] Button bButton;
     [SerializeField] MBSGameManager MBSGameManager;
     [SerializeField] int vDiffSet;
+  
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+       
         bButton = GetComponent<Button>();
         bButton.onClick.AddListener( SetDiff );
 
@@ -26,6 +28,9 @@ public class MBSSetDiff : MonoBehaviour
 
         MBSGameManager.vGameState = 1;
         MBSGameManager.vScene = 0;
+        MBSGameManager.FnSceneSetup();
+        MBSGameManager.FNSceneChange();
+
 
     }
 

@@ -7,7 +7,9 @@ public class MBSUIAudio : MonoBehaviour
 {
 
     [SerializeField] AudioSource aMusic;
+    [SerializeField] AudioSource aSFX;
     [SerializeField] Slider sVol;
+    [SerializeField] Slider sSFXVol;
     [SerializeField] GameObject gGamePlayScreen, gGameOverScreen, gInitialScreen, gPauseMenu;
     [SerializeField] TMP_Text vHighScore;
     [SerializeField] TMP_Text vFinalScore;
@@ -18,7 +20,7 @@ public class MBSUIAudio : MonoBehaviour
     void Start()
     {
         aMusic = GetComponent<AudioSource>();
-
+      
         FnInitialScreen();
 
     }
@@ -27,6 +29,10 @@ public class MBSUIAudio : MonoBehaviour
     void Update()
     {
         aMusic.volume = sVol.value;
+        aSFX.volume = sSFXVol.value;
+
+
+
     }
 
 
@@ -67,6 +73,12 @@ public class MBSUIAudio : MonoBehaviour
 
     }
 
+    public void FnPlaySFX(AudioClip aclip)
+    {
 
+        aSFX.clip = aclip;
+        aSFX.Play();
+        
+    }
 
 }

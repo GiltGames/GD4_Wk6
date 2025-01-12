@@ -1,10 +1,11 @@
-using TMPro.EditorUtilities;
+
 using TMPro;
 using UnityEngine;
-using TMPro.SpriteAssetUtilities;
+
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using UnityEditor.ShaderGraph.Internal;
+
+using JetBrains.Annotations;
 
 
 public class MBSInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -82,7 +83,7 @@ public class MBSInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
 
 
-    void FnWhileIn()
+   public void FnWhileIn()
     {
 
 
@@ -121,38 +122,47 @@ public class MBSInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         else
         {
 
-            if (vHerbIndex <99)
+            FnGetHerb();
+
+
+
+        }
+
+       
+
+    }
+    public void FnGetHerb()
+    {
+
+        // is there anything in the inventory slot?
+        if (vHerbIndex < 99)
+
+        {
+
+            // create a copy of the invenory object in the world ande set parameters so it is is not reset in position by MBSHerb on Start
+            //c
+            if (Input.GetMouseButtonDown(0))
+
 
             {
-                if (Input.GetMouseButtonDown(0))
 
-
-                {
-
-                    vPosCreate = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-              
-
-
-                    MBSGameManager.gCarried = Instantiate(MBSGameManager.gHerbs[vHerbIndex]);
-                    MBSGameManager.gCarried.GetComponent<MBSHerbs>().transform.position = new Vector3(vPosCreate.x, vPosCreate.y, MBSGameManager.gCarried.GetComponent<MBSHerbs>().vInstantDistIn); 
-                    MBSGameManager.gCarried.GetComponent<MBSHerbs>().vHerbNo = vHerbIndex;
-                    MBSGameManager.gCarried.GetComponent<MBSHerbs>().fFromInventory = true;
-                    MBSGameManager.gCarried.GetComponent<MBSHerbs>().fMouseClickOn = true;
-
-                    Debug.Log("Created at" + MBSGameManager.gCarried.GetComponent<MBSHerbs>().transform.position);
-
-                    vHerbIndex = 99;
-                    vHerbHeld.sprite = null;
-                    tSlot.text = string.Empty;
-                    MBSGameManager.gCarried.GetComponent<MBSHerbs>().name = "New Herb";
+                vPosCreate = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
 
 
-                }
 
+                MBSGameManager.gCarried = Instantiate(MBSGameManager.gHerbs[vHerbIndex]);
+                MBSGameManager.gCarried.GetComponent<MBSHerbs>().transform.position = new Vector3(vPosCreate.x, vPosCreate.y, MBSGameManager.gCarried.GetComponent<MBSHerbs>().vInstantDistIn);
+                MBSGameManager.gCarried.GetComponent<MBSHerbs>().vHerbNo = vHerbIndex;
+                MBSGameManager.gCarried.GetComponent<MBSHerbs>().fFromInventory = true;
+                MBSGameManager.gCarried.GetComponent<MBSHerbs>().fMouseClickOn = true;
 
-
+                Debug.Log("Created at" + MBSGameManager.gCarried.GetComponent<MBSHerbs>().transform.position);
+                //change inventory display
+                vHerbIndex = 99;
+                vHerbHeld.sprite = null;
+                tSlot.text = string.Empty;
+                MBSGameManager.gCarried.GetComponent<MBSHerbs>().name = "New Herb";
 
 
 
@@ -162,11 +172,10 @@ public class MBSInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
 
 
+
         }
 
 
-
     }
-
 
 }
