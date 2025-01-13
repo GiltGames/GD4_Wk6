@@ -77,6 +77,12 @@ public class MBSGameManager : MonoBehaviour
     void Update()
     {
        
+        // is game running - Gamestte : 0 not strarted, 1 running, 2 paused, 3 over
+
+
+
+        // timer runs down
+
         if (vGameState ==1)
 
         {
@@ -107,24 +113,11 @@ public class MBSGameManager : MonoBehaviour
             tIDObject.text = string.Empty;
         }
 
-     /*   for (int i = 0; i < tSlot.Length; i++)
-        {
-            if (MBSInventory.vCarried[i] != null)
-            {
-                tSlot[i].text = MBSInventory.vCarried[i].name;
-
-            }
-            else
-            {
-                tSlot[i].text = string.Empty;
-
-            }
-
-        }
-
-        */
+    
     }
 
+
+    //spawn bat function
 
     IEnumerator CRSpawnFlying()
 
@@ -157,6 +150,8 @@ public class MBSGameManager : MonoBehaviour
     }
 
 
+    // spawn herbs function at the start of the scene
+
     void FnSpawnHerbInitial()
     {
 
@@ -188,6 +183,10 @@ public class MBSGameManager : MonoBehaviour
 
 
     }
+
+
+
+    // spawn herbs function 
 
     IEnumerator FnSpawnHerb()
 
@@ -238,10 +237,15 @@ public class MBSGameManager : MonoBehaviour
     }
 
 
+    // initial game set up for scenes
+
+
     public void FnSceneSetup()
 
     {
         // sets up all of the scenes
+
+        // how they map onto each other
 
         vSceneMap[0, 0] = 1;
         vSceneMap[0, 1] = 2;
@@ -284,6 +288,8 @@ public class MBSGameManager : MonoBehaviour
         
     }
 
+    // check buttons on screen and change scene
+
     public void FnSceneButton0()
     {
         gValidSpawnArea[vScene].SetActive(false);
@@ -314,6 +320,8 @@ public class MBSGameManager : MonoBehaviour
 
 
 
+
+    // Mains scene set up on new scene
     public void FNSceneChange()
     {
 

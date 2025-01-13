@@ -4,6 +4,8 @@ using TMPro;
 
 using UnityEngine;
 
+// script attached the cauldron and deals with brewing - sets up potions and checks what happens when herbs put it
+
 
 public class MBSBrew1 : MonoBehaviour
 {
@@ -61,7 +63,7 @@ public class MBSBrew1 : MonoBehaviour
 
     void FnPotionSetUp()
     {
-
+        // sets up the random ingredients for the potion for the game
      
 
         for (int i = 0; i < vPotion.Length; i++)
@@ -80,6 +82,8 @@ public class MBSBrew1 : MonoBehaviour
 
     private void OnMouseEnter()
     {
+
+        // if mouse is over cauldron checks for item
         if (MBSGameManager.gCarried != null)
 
         {
@@ -101,7 +105,7 @@ public class MBSBrew1 : MonoBehaviour
         //passes parapment for colour of bubbles
         // to be dependant on what works
 
-      
+      // checks to see what potion, if any, is made
 
         vIngredients[vSequence] = MBSGameManager.gCarried.GetComponent<MBSHerbs>().vHerbNo;
         vSequence++;
@@ -154,6 +158,8 @@ public class MBSBrew1 : MonoBehaviour
                 }
 
             }
+
+            // output depends on potion made
 
             if (fAnyPotionMade)
             {
@@ -212,6 +218,8 @@ public class MBSBrew1 : MonoBehaviour
 
     IEnumerator FnPotionDisplay(string vPotionTmp)
     {
+       //displays the MADE message
+        
         tPotionDisplay.text = vPotionTmp;
        
 

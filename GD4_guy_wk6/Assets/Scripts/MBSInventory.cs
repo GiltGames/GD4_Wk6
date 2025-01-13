@@ -8,6 +8,9 @@ using UnityEngine.EventSystems;
 using JetBrains.Annotations;
 
 
+// This script manages taking items on and off the Inventory slots in the UI
+
+
 public class MBSInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 
@@ -40,6 +43,8 @@ public class MBSInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     // Update is called once per frame
     void Update()
     {
+        //hecks if mouse is over the item slot
+
 
         if (fMouseOver)
 
@@ -55,6 +60,8 @@ public class MBSInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+
+        // If over item slot set flag to true
 
         I.color = Color.red;
 
@@ -76,6 +83,8 @@ public class MBSInventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
  public    void OnPointerExit(PointerEventData eventData)
     {
+        // On leaving item slot set flag to false
+        
         I.color = vColorStart;
 
         fMouseOver = false;

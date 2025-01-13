@@ -24,6 +24,8 @@ public class MBSSetDiff : MonoBehaviour
  void SetDiff()
     {
         
+        //sets the game difficulty and sets up the initial secene
+
         MBSGameManager.vDifficulty = vDiffSet;
 
         MBSGameManager.vGameState = 1;

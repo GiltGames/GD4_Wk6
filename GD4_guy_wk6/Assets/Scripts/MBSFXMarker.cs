@@ -1,16 +1,11 @@
 using UnityEngine;
 
+
+
+
 public class MBSFXMarker : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    // only here so that the SFX can be found
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }

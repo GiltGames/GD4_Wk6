@@ -5,6 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
+
+// script covers initial position of herb and  its idenity. Also pick up of herbs by the mouse
+
 public class MBSHerbs : MonoBehaviour
 {
     [SerializeField] SpriteRenderer rSpriteRenderer;
@@ -86,18 +89,9 @@ public class MBSHerbs : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        //reset mouse button
+      
+        // undo select if mouse is released
 
-       /* if (fMouseClickOn)
-        {
-
-            Vector3 vCurMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-            transform.position = vScreenPosStart + vCurMousePos - vMousePosStart;
-
-        }
-       */
 
         if (Input.GetMouseButtonUp(0))
         {
@@ -110,6 +104,9 @@ public class MBSHerbs : MonoBehaviour
 
         if (fMouseOver)
         {
+
+            // if mouse is over, check to see if it has been selected
+
             if (Input.GetMouseButton(0))
             {
                 vCurMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -130,6 +127,8 @@ public class MBSHerbs : MonoBehaviour
     private void OnMouseEnter()
     {
         
+        // set flag to true if mouse goes over
+
         rSpriteRenderer.color = vStrongColour;
         fMouseOver = true;
 
@@ -137,20 +136,20 @@ public class MBSHerbs : MonoBehaviour
     }
 
 
-    private void OnMouseExit()
-    {
-
-       // rSpriteRenderer.color = vFadeColour;
-       // fMouseOver = false;
-
-    }
+ 
 
     private void OnMouseDown()
     {
+       
+        
+        // sets up initial position of mouse in the world on press
         vScreenPosStart = transform.position;
        vMousePosStart = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         vOffset = vScreenPosStart - vMousePosStart;
         fMouseOver = true;
+
+        // notes which object is being picke dup
+
         MBSGameManager.gCarried = gameObject;
 
 
@@ -161,20 +160,10 @@ public class MBSHerbs : MonoBehaviour
 
 
 
-   /* private void OnMouseDrag()
-    {
-        Vector3 vCurMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        
-        transform.position = vScreenPosStart + vCurMousePos - vMousePosStart;
-
-       
-
-    }
-
-    */
  
 
     
+    // set up the initial position of the herb - done this way as a result of the lab construction order - this was for targets
 
 
     Vector3 FnStartPos()
@@ -182,6 +171,9 @@ public class MBSHerbs : MonoBehaviour
         fValidSpawn = false;
 
         Vector3 vPosTmp = new Vector3(Random.Range(-vStartPosLimit, vStartPosLimit), Random.Range(-vDistanceBelow, vDistanceBelow), vDistancefromBack);
+
+
+        // check to see if over the invisible object in the scene that defined valid spawning position
 
         Physics.Raycast(vPosTmp, new Vector3(0, 0, 1), out RaycastHit hit, vCheckDistance);
 
@@ -201,7 +193,7 @@ public class MBSHerbs : MonoBehaviour
         return vPosTmp;
     }
 
-
+    // creates position when the object is taken from the inventory
     Vector3 FnInventoryPos()
     {
         Vector3 vPosTmp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -217,8 +209,7 @@ public class MBSHerbs : MonoBehaviour
         rSpriteRenderer.color = vStrongColour;
         fMouseOver = true;
 
-     //   gIDObj = GameObject.FindWithTag("IDDisp");
-      //  tIDObj = gIDObj.GetComponent<TextMeshProUGUI>();
+    
 
 
         return vPosTmp;

@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+
+// runs music, score and lives and deals with game over
+
 public class MBSUIAudio : MonoBehaviour
 {
 

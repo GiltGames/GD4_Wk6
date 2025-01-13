@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-
+// moves the sun and moon light
 
 public class MBSSun : MonoBehaviour
 {

@@ -4,7 +4,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 [RequireComponent(typeof(Rigidbody))]
 
 
-
+// Script for creation of targets, just the bat
 
 public class MBSTarget : MonoBehaviour
 {
@@ -31,7 +31,12 @@ public class MBSTarget : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
+
         rb = GetComponent<Rigidbody>();
+        // set up location, speed etc
+
+
 
         transform.position = FnStartPos();
 
@@ -40,6 +45,8 @@ public class MBSTarget : MonoBehaviour
 
         gGameManager = FindFirstObjectByType<MBSGameManager>().gameObject;
         MBSGameManager = gGameManager.GetComponent<MBSGameManager>();
+
+        // set up audio
 
         MBSFXMarker = FindFirstObjectByType<MBSFXMarker>().GetComponent<MBSFXMarker>();
         aSFX = MBSFXMarker.GetComponent<AudioSource>();
@@ -87,7 +94,9 @@ public class MBSTarget : MonoBehaviour
 
     private void OnMouseOver()
     {
-        
+       
+        // stop bat if pointer goes over it
+
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         
@@ -100,6 +109,9 @@ public class MBSTarget : MonoBehaviour
 
     private void OnMouseDown()
     {
+
+        // destroy bat with effect and create bat wing
+
         Destroy(gameObject);
         MBSGameManager.vCurrentMouseOver = null;
         MBSGameManager.FnUpdateScore(vValue);
@@ -111,6 +123,9 @@ public class MBSTarget : MonoBehaviour
 
 
     }
+
+
+    // set up the aura over the items - if set
 
     private void OnMouseEnter()
     {

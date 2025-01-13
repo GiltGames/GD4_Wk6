@@ -1,6 +1,9 @@
 using TMPro;
 using UnityEngine;
 
+
+// expands the scrolls to a UI on the scree
+
 public class MBSExpandSrl : MonoBehaviour
 {
 
@@ -30,10 +33,19 @@ public class MBSExpandSrl : MonoBehaviour
     {
         // call MBSBrew now as the caudron is now active
         
+        // fins the cauldron
+
         MBSBrew1 = FindFirstObjectByType<MBSBrew1>().gameObject.GetComponent<MBSBrew1>();
 
         gScroll.SetActive(true);
+
+        // potion title display
+
         tPotionTitle.text = MBSBrew1.vPotion[vPotionNo];
+        
+        
+        // ingredient list generated for potion
+        
         tScroll.text = "";
         for (int i = 0; i < MBSGameManager.vDifficulty; i++)
         {
@@ -56,6 +68,8 @@ public class MBSExpandSrl : MonoBehaviour
     private void OnMouseExit()
     {
         
+        //deactiveate the UI for the recipe
+
         tScroll.text = string.Empty;
         gScroll.SetActive(false);
     }
